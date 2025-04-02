@@ -1,0 +1,26 @@
+{
+  "name": "men-stack-crud-app-lab",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andmryan/men-stack-crud-app-lab.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andmryan/men-stack-crud-app-lab/issues"
+  },
+  "homepage": "https://github.com/andmryan/men-stack-crud-app-lab#readme",
+  "description": "",
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "mongoose": "^8.13.1"
+  }
+}

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= bird.name %></title>
+</head>
+<body>
+    <h1><%= bird.name %></h1>
+    <h3>Family: <%= bird.family %></h3>
+    <p>Description: <%= bird.description %></p>
+    <img src="<%= bird.image %>">
+    <a href="/birds/edit/<%= bird.id%>">Edit this bird?</a>
+    <a>Delete this bird?</a>
+</body>
+</html>

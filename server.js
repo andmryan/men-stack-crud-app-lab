@@ -43,9 +43,27 @@ app.post("/birds", async (req, res) => {
 app.get("/birds", async (req, res) =>{
     //  Gather all birds from the database.
     const allBirds = await Bird.find();
+    // Log for the purpose of collecting IDs.
+    console.log(allBirds);
     
     // Render the page that shows all the birds.
     res.render("birds/index.ejs", { birds: allBirds });
+});
+
+// Set a route to render a single bird's page based on their ID.
+app.get("/birds/:id", async (req, res) =>{
+    // Make a constant that isolates a single bird from the database
+    const birdID = await Bird.findById(req.params.id);
+    console.log(birdID);
+    
+    // Render the page using the bird's ID
+    res.render("birds/birdpage.ejs", { bird: birdID });  
+});
+
+// Create a route for editing a specific bird
+app.get("/birds/:id/edit", async (req, res) =>{
+    // pass in birdID
+    res.render("birds/edit.ejs");
 });
 
 // Listen

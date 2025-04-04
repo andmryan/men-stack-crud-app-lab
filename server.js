@@ -5,6 +5,8 @@ dotenv.config();
 // Required Packages
 const express = require("express");
 const mongoose = require("mongoose");
+const methodOverride = require("method-override");
+const morgan = require("morgan");
 
 // App Initialization
 const app = express();

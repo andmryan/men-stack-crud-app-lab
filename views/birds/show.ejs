@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= bird.name %></title>
+</head>
+<body>
+    <h1><%= bird.name %></h1>
+    <h3>Family: <%= bird.family %></h3>
+    <p>Description: <%= bird.description %></p>
+    <img src="<%= bird.image %>">
+    <div id="navigation">
+    <form action="/birds">
+        <button type="submit">Back to your catalogue</button>
+    </form>
+    <form action="/birds/edit/<%= bird.id%>">
+        <button type="submit">Edit <%= bird.name %></button>
+    </form>
+    <form action="/birds/<%= bird._id %>?_method=DELETE" method="POST">
+        <button type="submit">Delete <%= bird.name %></button>
+    </form>
+</div>
+</body>
+</html>

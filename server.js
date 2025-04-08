@@ -8,9 +8,13 @@ const mongoose = require("mongoose");
 const methodOverride = require("method-override");
 const morgan = require("morgan");
 
-// App Initialization
+// Express
 const app = express();
+
+// App Initialization
 app.use(express.urlencoded({ extended: false }));
+app.use(methodOverride("_method"));
+app.use(morgan("dev"));
 
 // Connection
 mongoose.connect(process.env.MONGODB_URI);
@@ -34,14 +38,48 @@ app.get("/birds/new", (req, res) =>{
     res.render("birds/new.ejs")
 });
 
-// Set a route to post the filled form for a new bird
-app.post("/birds", async (req, res) => {
-    // Wait for the bird to be made.
-    await Bird.create(req.body);
-    // redirect to the form to add a new bird.
+// Set a route to edit a bird's page based on its ID.
+app.get("/birds/edit/:birdId", async (req, res) => {
+    const foundBird = await Bird.findById(req.params.birdId);
+    // console.log(foundFruit);
+    res.render("birds/edit.ejs", { bird : foundBird });
+});
+
+// Set a route to view a bird's page based on its ID.
+app.get("/birds/:birdId", async (req, res) =>{
+    // Make a constant that isolates a single bird from the database
+    const foundBird = await Bird.findById(req.params.birdId);
+    // console.log(birdID);
+    
+    // Render the page using the bird's ID
+    res.render("birds/show.ejs", { bird: foundBird }); 
+});
+
+// Set a route to delete a bird's page based on its ID.
+app.delete("/birds/:birdId", async (req, res) => {
+    await Bird.findByIdAndDelete(req.params.birdId);
     res.redirect("/birds");
 });
 
+// Set a route to edit the form of a bird based on its ID.
+app.put("/birds/:birdId", async (req, res) => {
+    // Wait for the bird to be edited
+    await Bird.findByIdAndUpdate(req.params.birdId, req.body);
+
+    // redirect to the bird's page.
+    res.redirect("/birds");    
+});
+
+// Set a route to post the filled form for a new bird.
+app.post("/birds", async (req, res) => {
+    // Wait for the bird to be made.
+    await Bird.create(req.body);
+
+    // redirect to the bird directory
+    res.redirect(`/birds/${req.params.birdID}`);
+});
+
+// Set a route to render a 'directory' page
 app.get("/birds", async (req, res) =>{
     //  Gather all birds from the database.
     const allBirds = await Bird.find();
@@ -50,22 +88,6 @@ app.get("/birds", async (req, res) =>{
     
     // Render the page that shows all the birds.
     res.render("birds/index.ejs", { birds: allBirds });
-});
-
-// Set a route to render a single bird's page based on their ID.
-app.get("/birds/:id", async (req, res) =>{
-    // Make a constant that isolates a single bird from the database
-    const birdID = await Bird.findById(req.params.id);
-    console.log(birdID);
-    
-    // Render the page using the bird's ID
-    res.render("birds/birdpage.ejs", { bird: birdID });  
-});
-
-// Create a route for editing a specific bird
-app.get("/birds/:id/edit", async (req, res) =>{
-    // pass in birdID
-    res.render("birds/edit.ejs");
 });
 
 // Listen

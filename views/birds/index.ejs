@@ -9,9 +9,11 @@
     <h1>Your Birds</h1>
     <ul>
         <% birds.forEach(bird => { %>
-            <li><a href="/birds/<%= bird.id%>"><%= bird.name %></a></li>
+            <li><a href="/birds/<%= bird._id%>"><%= bird.name %></a></li>
         <% }); %>
     </ul>
-    <a href="/birds/new">Add a new bird?</a>
+    <form action="/birds/new">
+        <button type="submit">Catalogue a new bird?</button>
+    </form>
 </body>
 </html>
